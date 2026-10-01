@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Details | SIBL Properties</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="site-header"><div class="container header-inner"><a href="index.html" class="logo"><span class="logo-main">SIBL</span><span class="logo-sub">PROPRERTIES</span></a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">⚠</button><nav class="main-nav"><a href="index.html">Home</a><a href="properties.html">Properties</a><a href="about.html">About Me</a><a href="guides.html">Guides</a><a href="contact.html">Contact</a><a href="https://wa.me/2347060988611" class="whatsapp-btn" target="_blank">WhatsApp Me</a></nav></div></header>
+<main>
+<section class="section"><div class="container" id="property-detail"><h1 id="property-name">Property Details</h1><div id="property-content"></div></div></section>
+</main>
+<footer class="site-footer"><div class="container"><p>&#169; 2026 SIBL Properties. All rights reserved.</p></div></footer>
+<script src="data/properties.js"></script>
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const mainNav = document.querySelector('.main-nav');
+if (menuToggle && mainNav) {menuToggle.addEventListener('click', () => {const isOpen = mainNav.classList.toggle('menu-open'); menuToggle.setAttribute('aria-expanded',isOpen);});}
+</script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const propertyId = params.get("id");
+const selectedProperty = properties.find(item => item.id === propertyId);
+
+const propertyName = document.querySelector("#property-name");
+const propertyContent = document.querySelector("#property-content");
+
+if (!selectedProperty) {
+    propertyName.textContent = "Property Not Found";
+    propertyContent.innerHTML = "<p>The property you are looking for could not be found.</p>";
+} else {
+    propertyName.textContent = selectedProperty.name;
+
+    propertyContent.innerHTML = `
+        <p><strong>Location:</strong> ${selectedProperty.location}</p>
+        <p>${selectedProperty.description}</p>
+
+        <h2>Available Options</h2>
+
+        ${selectedProperty.options.map(option => `
+            <div class="property-card" style="margin-bottom:20px;">
+                <div class="property-body">
+                    <h3>${option.type}</h3>
+                    <p><strong>Short Plan:</strong> ${option.shortPlan}</p>
+                    <p><strong>Long Plan:</strong> ${option.longPlan}</p>
+                </div>
+            </div>
+        `).join("")}
+
+        <a href="https://wa.me/2347060988611"
+           class="btn btn-gold"
+           target="_blank">
+           Enquire on WhatsApp
+        </a>
+    `;
+}
+</script>
+
+</body>
+</html>

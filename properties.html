@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Properties | SIBL Properties</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<script src="data/properties.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="container header-inner">
+<a href="index.html" class="logo">
+<span class="logo-main">SIBL</span>
+<span class="logo-sub">PROPERTIES</span>
+</a>
+
+<button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+<nav class="main-nav">
+<a href="index.html">Home</a>
+<a href="properties.html">Properties</a>
+<a href="about.html">About Me</a>
+<a href="guides.html">Guides</a>
+<a href="contact.html">Contact</a>
+<a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20would%20like%20to%20know%20more%20about%20your%20properties." class="whatsapp-btn" target="_blank">WhatsApp Me</a>
+</nav>
+</div>
+</header>
+
+<section class="section">
+<div class="container">
+
+<div class="section-heading">
+<h1>Available Properties</h1>
+<p>Explore current property opportunities marketed through SIBL Properties.</p>
+</div>
+
+<div class="property-grid" id="all-properties"></div>
+
+</div>
+</section>
+
+<footer class="site-footer">
+<div class="container">
+<p>© 2026 SIBL Properties. Property Opportunities. Personal Guidance.</p>
+</div>
+</footer>
+
+<script>
+const propertyContainer = document.querySelector("#all-properties");
+
+if (propertyContainer && typeof properties !== "undefined") {
+propertyContainer.innerHTML = properties.map(property => {
+const options = property.options || [];
+
+return `
+<article class="property-card">
+<div class="property-image">Property Image</div>
+
+<div class="property-body">
+<h3>${property.name}</h3>
+
+<div class="property-location">${property.location}</div>
+
+<p>${property.description}</p>
+
+<div class="property-price">
+${options.length ? "From " + options[0].shortPlan : "Price on request"}
+</div>
+
+<h4>Available Options</h4>
+
+${options.map(option => `
+<div style="padding:10px 0;border-bottom:1px solid var(--border);">
+<strong>${option.type}</strong><br>
+<span style="font-size:14px;color:var(--gray);">
+Short Plan: ${option.shortPlan}<br>
+Long Plan: ${option.longPlan}
+</span>
+</div>
+`).join("")}
+
+<br>
+
+<a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20am%20interested%20in%20${encodeURIComponent(property.name)}." class="btn btn-gold" target="_blank">
+Enquire on WhatsApp
+</a>
+
+</div>
+</article>
+`;
+}).join("");
+}
+</script>
+
+<script>
+const menuToggle=document.querySelector(".menu-toggle");
+const mainNav=document.querySelector(".main-nav");
+
+if(menuToggle&&mainNav){
+menuToggle.addEventListener("click",function(){
+mainNav.classList.toggle("menu-open");
+const isOpen=mainNav.classList.contains("menu-open");
+menuToggle.setAttribute("aria-expanded",isOpen);
+menuToggle.textContent=isOpen?"✕":"☰";
+});
+}
+</script>
+
+</body>
+</html>

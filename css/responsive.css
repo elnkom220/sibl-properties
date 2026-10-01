@@ -1,0 +1,183 @@
+/* SIBL RESPONSIVE MENU AND ABOUT PAGE */
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+}
+
+.main-nav a {
+    white-space: nowrap;
+}
+
+.about-grid {
+    align-items: center;
+    gap: 55px;
+}
+
+.about-image img {
+    width: 100%;
+    max-width: 480px;
+    display: block;
+    margin: auto;
+}
+
+.about-content h1 {
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+
+.about-content p {
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+    .header-inner {
+        gap: 16px;
+    }
+
+    .main-nav {
+        gap: 12px;
+    }
+
+    .main-nav a {
+        font-size: 13px;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+
+    .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .logo {
+        align-self: flex-start;
+    }
+
+    .main-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 100%;
+    }
+
+    .main-nav a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 8px;
+        font-size: 13px;
+        text-align: center;
+        white-space: normal;
+        border-radius: 5px;
+    }
+
+    .main-nav .whatsapp-btn {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .about-image {
+        order: 1;
+    }
+
+    .about-content {
+        order: 2;
+    }
+
+    .about-content h1 {
+        font-size: 34px;
+    }
+
+    .about-content p {
+        font-size: 15px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .button-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .button-row .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* SMALL PHONES */
+@media (max-width: 420px) {
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-content h1 {
+        font-size: 30px;
+    }
+}
+.menu-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    color: var(--white);
+    font-size: 28px;
+    line-height: 1;
+    padding: 6px;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .header-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .main-nav.menu-open {
+        display: grid;
+    }
+
+    .main-nav a {
+        min-height: 40px;
+    }
+
+    .main-nav .whatsapp-btn {
+        grid-column: auto;
+    }
+}
