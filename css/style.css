@@ -447,3 +447,10 @@ img {
         padding: 30px 20px;
     }
 }
+
+
+.site-logo { max-height: 45px; width: auto; display: block; }
+
+
+.logo .site-logo { height: 42px; width: auto; max-height: 42px; display: block; object-fit: contain; }
+.logo .site-logo { width: 130px !important; height: auto !important; max-height: 60px !important; object-fit: contain; }

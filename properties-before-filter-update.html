@@ -6,7 +6,7 @@
 <title>Properties | SIBL Properties</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
-<script src="data/properties.js?v=2"></script>
+<script src="data/properties.js"></script>
 </head>
 <body>
 
@@ -58,8 +58,8 @@ function getPropertyTypes() {
     const types = [];
     properties.forEach(property => {
         (property.options || []).forEach(option => {
-            if (option.propertyType && !types.includes(option.propertyType)) {
-                types.push(option.propertyType);
+            if (option.type && !types.includes(option.type)) {
+                types.push(option.type);
             }
         });
     });
@@ -95,7 +95,7 @@ function renderProperties() {
     const filtered = properties.filter(property => {
         const matchesLocation = !location || property.location === location;
         const matchesCategory = !category || property.category === category;
-        const matchesType = !type || (property.options || []).some(option => option.propertyType === type);
+        const matchesType = !type || (property.options || []).some(option => option.type === type);
 
         return matchesLocation && matchesCategory && matchesType;
     });
@@ -118,9 +118,9 @@ function renderProperties() {
                 <div class="property-price">${options.length ? "From " + options[0].shortPlan : "Price on request"}</div>
                 <h4>Available Options</h4>
 
-                ${(options.filter(option => !type || option.propertyType === type)).map(option => `
+                ${(options.filter(option => !type || option.type === type)).map(option => `
                     <div style="padding:10px 0;border-bottom:1px solid var(--border);">
-                        <strong>${option.propertyType}</strong><br>
+                        <strong>${option.type}</strong><br>
                         <span style="font-size:14px;color:var(--gray);">
                             Short Plan: ${option.shortPlan}<br>
                             Long Plan: ${option.longPlan}
