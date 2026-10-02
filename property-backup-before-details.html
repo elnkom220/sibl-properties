@@ -10,7 +10,7 @@
 <body>
 <header class="site-header"><div class="container header-inner"><a href="index.html" class="logo"><img src="images/logo/sibl-properties-logo.png" alt="SIBL Properties" class="site-logo"></a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">⚠</button><nav class="main-nav"><a href="index.html">Home</a><a href="properties.html">Properties</a><a href="about.html">About Me</a><a href="guides.html">Guides</a><a href="contact.html">Contact</a><a href="https://wa.me/2347060988611" class="whatsapp-btn" target="_blank">WhatsApp Me</a></nav></div></header>
 <main>
-<section class="section property-detail-section"><div class="container" id="property-detail"><a href="properties.html" class="property-back-link">← Back to Properties</a><div class="property-detail-header"><span class="property-detail-label">PROPERTY DETAILS</span><h1 id="property-name">Property Details</h1><div id="property-gallery" class="property-gallery"></div><div id="property-content"></div></div></div></section>
+<section class="section"><div class="container" id="property-detail"><h1 id="property-name">Property Details</h1><div id="property-content"></div></div></section>
 </main>
 <footer class="site-footer"><div class="container"><p>&#169; 2026 SIBL Properties. All rights reserved.</p></div></footer>
 <script src="data/properties.js"></script>
@@ -34,12 +34,6 @@ if (!selectedProperty) {
 } else {
     propertyName.textContent = selectedProperty.name;
 
-    const propertyGallery = document.querySelector("#property-gallery");
-
-    if (selectedProperty.images && selectedProperty.images.length) {
-        propertyGallery.innerHTML = selectedProperty.images.map(image => `<img src="${image}" alt="${selectedProperty.name}" class="property-gallery-image">`).join("");
-    }
-
     propertyContent.innerHTML = `
         <p><strong>Location:</strong> ${selectedProperty.location}</p>
         <p>${selectedProperty.description}</p>
@@ -49,8 +43,9 @@ if (!selectedProperty) {
         ${selectedProperty.options.map(option => `
             <div class="property-card" style="margin-bottom:20px;">
                 <div class="property-body">
-                    <h3>${option.propertyType}</h3><p class="property-option-bedrooms">${option.bedrooms || ""}</p>
-                    <div class="option-price-row"><div><span class="option-label">Short Payment Plan</span><strong>${option.shortPlan}</strong></div><div><span class="option-label">Long Payment Plan</span><strong>${option.longPlan}</strong></div></div>
+                    <h3>${option.propertyType}</h3>
+                    <p><strong>Short Plan:</strong> ${option.shortPlan}</p>
+                    <p><strong>Long Plan:</strong> ${option.longPlan}</p>
                 </div>
             </div>
         `).join("")}

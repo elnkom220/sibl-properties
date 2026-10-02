@@ -110,11 +110,12 @@ function renderProperties() {
 
         return `
         <article class="property-card">
-            <div class="property-image">Property Image</div>
+            <div class="property-image">${property.images && property.images.length ? `<img src="${property.images[0]}" alt="${property.name}">` : "Property Image"}</div>
             <div class="property-body">
                 <h3>${property.name}</h3>
                 <div class="property-location">${property.location}</div>
                 <p>${property.description}</p>
+                <div class="property-types"><strong>Available:</strong> ${[...new Set(options.map(option => option.propertyType).filter(Boolean))].join(" • ")}</div>
                 <div class="property-price">${options.length ? "From " + options[0].shortPlan : "Price on request"}</div>
                 <h4>Available Options</h4>
 
@@ -129,7 +130,7 @@ function renderProperties() {
                 `).join("")}
 
                 <br>
-                <a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20am%20interested%20in%20${encodeURIComponent(property.name)}." class="btn btn-gold" target="_blank">Enquire on WhatsApp</a>
+                <a href="property.html?id=${property.id}" class="btn btn-outline-dark">View Property</a> <a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20am%20interested%20in%20${encodeURIComponent(property.name)}." class="btn btn-gold" target="_blank">Enquire on WhatsApp</a>
             </div>
         </article>`;
     }).join("");
