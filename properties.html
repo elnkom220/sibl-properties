@@ -35,7 +35,16 @@
 <p>Explore current property opportunities marketed through SIBL Properties.</p>
 </div>
 
-<div class="property-filters"> <select id="location-filter"><option value="">All Locations</option></select> <select id="type-filter"><option value="">All Property Types</option></select> <select id="category-filter"><option value="">All Categories</option></select> </div>
+<div class="property-mode-switch">
+<button type="button" class="property-mode-btn active" data-mode="land">LAND</button>
+<button type="button" class="property-mode-btn" data-mode="homes">APARTMENTS &amp; HOMES</button>
+</div>
+
+<div class="property-filters">
+<select id="location-filter"><option value="">All Locations</option></select>
+<select id="type-filter"><option value="">All Plot Sizes</option></select>
+<select id="category-filter"><option value="">All Prices</option></select>
+</div>
 
 <div class="property-grid" id="all-properties"></div>
 
@@ -53,10 +62,29 @@ const propertyContainer = document.querySelector("#all-properties");
 const locationFilter = document.querySelector("#location-filter");
 const typeFilter = document.querySelector("#type-filter");
 const categoryFilter = document.querySelector("#category-filter");
+const modeButtons = document.querySelectorAll(".property-mode-btn");
 
-function getPropertyTypes() {
+let currentMode = "land";
+
+function getLocations(list) {
+    return [...new Set(list.map(property => property.location).filter(Boolean))].sort();
+}
+
+function getPlotSizes(list) {
+    const sizes = [];
+    list.forEach(property => {
+        (property.options || []).forEach(option => {
+            if (option.plotSize && !sizes.includes(option.plotSize)) {
+                sizes.push(option.plotSize);
+            }
+        });
+    });
+    return sizes.sort();
+}
+
+function getPropertyTypes(list) {
     const types = [];
-    properties.forEach(property => {
+    list.forEach(property => {
         (property.options || []).forEach(option => {
             if (option.propertyType && !types.includes(option.propertyType)) {
                 types.push(option.propertyType);
@@ -66,39 +94,112 @@ function getPropertyTypes() {
     return types.sort();
 }
 
-function getLocations() {
-    return [...new Set(properties.map(property => property.location).filter(Boolean))].sort();
+function getBedrooms(list) {
+    const bedrooms = [];
+    list.forEach(property => {
+        (property.options || []).forEach(option => {
+            if (option.bedrooms && !bedrooms.includes(option.bedrooms)) {
+                bedrooms.push(option.bedrooms);
+            }
+        });
+    });
+    return bedrooms.sort();
 }
 
-function getCategories() {
-    return [...new Set(properties.map(property => property.category).filter(Boolean))].sort();
+function getPrices(list) {
+    const prices = [];
+    list.forEach(property => {
+        (property.options || []).forEach(option => {
+            if (option.price && !prices.includes(option.price)) {
+                prices.push(option.price);
+            }
+        });
+    });
+    return prices;
 }
 
-function fillFilter(select, values) {
+function fillFilter(select, values, formatter) {
+    select.innerHTML = "";
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = select === locationFilter
+        ? "All Locations"
+        : currentMode === "land"
+            ? (select === typeFilter ? "All Plot Sizes" : "All Prices")
+            : (select === typeFilter ? "All Property Types" : "All Bedrooms");
+    select.appendChild(defaultOption);
+
     values.forEach(value => {
         const option = document.createElement("option");
         option.value = value;
-        option.textContent = value;
+        option.textContent = formatter ? formatter(value) : value;
         select.appendChild(option);
     });
 }
 
-fillFilter(locationFilter, getLocations());
-fillFilter(typeFilter, getPropertyTypes());
-fillFilter(categoryFilter, getCategories());
+function getModeProperties() {
+    return properties.filter(property => {
+        const options = property.options || [];
+        return currentMode === "land"
+            ? options.some(option => option.plotSize)
+            : options.some(option => option.bedrooms);
+    });
+}
+
+function setupFilters() {
+    const list = getModeProperties();
+
+    fillFilter(locationFilter, getLocations(list));
+    
+    if (currentMode === "land") {
+        fillFilter(typeFilter, getPlotSizes(list));
+        fillFilter(categoryFilter, getPrices(list), value => value);
+    } else {
+        fillFilter(typeFilter, getPropertyTypes(list));
+        fillFilter(categoryFilter, getBedrooms(list));
+    }
+}
+
+function matchesFilters(property) {
+    const options = property.options || [];
+    const location = locationFilter.value;
+    const filterTwo = typeFilter.value;
+    const filterThree = categoryFilter.value;
+
+    if (location && property.location !== location) return false;
+
+    if (currentMode === "land") {
+        return options.some(option =>
+            option.plotSize === filterTwo || !filterTwo
+        ) && options.some(option =>
+            option.price === filterThree || !filterThree
+        );
+    }
+
+    return options.some(option =>
+        (!filterTwo || option.propertyType === filterTwo) &&
+        (!filterThree || option.bedrooms === filterThree)
+    );
+}
+
+function getCardOption(property) {
+    const options = property.options || [];
+
+    if (currentMode === "land") {
+        return options.find(option =>
+            (!typeFilter.value || option.plotSize === typeFilter.value) &&
+            (!categoryFilter.value || option.price === categoryFilter.value)
+        ) || options.find(option => option.plotSize) || options[0];
+    }
+
+    return options.find(option =>
+        (!typeFilter.value || option.propertyType === typeFilter.value) &&
+        (!categoryFilter.value || option.bedrooms === categoryFilter.value)
+    ) || options.find(option => option.bedrooms) || options[0];
+}
 
 function renderProperties() {
-    const location = locationFilter.value;
-    const type = typeFilter.value;
-    const category = categoryFilter.value;
-
-    const filtered = properties.filter(property => {
-        const matchesLocation = !location || property.location === location;
-        const matchesCategory = !category || property.category === category;
-        const matchesType = !type || (property.options || []).some(option => option.propertyType === type);
-
-        return matchesLocation && matchesCategory && matchesType;
-    });
+    const filtered = getModeProperties().filter(matchesFilters);
 
     if (!filtered.length) {
         propertyContainer.innerHTML = "<p>No properties match your selected filters.</p>";
@@ -106,40 +207,68 @@ function renderProperties() {
     }
 
     propertyContainer.innerHTML = filtered.map(property => {
-        const options = property.options || [];
+        const option = getCardOption(property) || {};
+        const image = currentMode === "homes" && property.id === "carlton-residences" ? "<img src=\"images/properties/carlton-3br-home-enhanced.jpg\" alt=\"" + property.name + "\">" : property.images && property.images.length
+            ? `<img src="${property.images[0]}" alt="${property.name}">`
+            : "Property Image";
+
+        const duration = option.duration || "Please confirm";
+
+        if (currentMode === "land") {
+            return `
+            <article class="property-card">
+                <div class="property-image">${image}</div>
+                <div class="property-body">
+                    <h3>${property.name}</h3>
+                    <div class="property-location">${property.location}</div>
+                    <p class="property-types"><strong>Plot Size:</strong> ${option.plotSize || "Please confirm"}</p>
+                    <p class="property-types"><strong>Prototype:</strong> ${option.propertyType || "Please confirm"}</p>
+                    <div class="property-price">${option.price || "Price on request"}</div>
+                    <p class="property-types"><strong>Duration:</strong> ${duration}</p>
+                    <a href="property.html?id=${property.id}" class="btn btn-outline-dark">View Property</a>
+                    <a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20am%20interested%20in%20${encodeURIComponent(property.name)}." class="btn btn-gold" target="_blank">Enquire on WhatsApp</a>
+                </div>
+            </article>`;
+        }
 
         return `
         <article class="property-card">
-            <div class="property-image">${property.images && property.images.length ? `<img src="${property.images[0]}" alt="${property.name}">` : "Property Image"}</div>
+            <div class="property-image">${image}</div>
             <div class="property-body">
                 <h3>${property.name}</h3>
                 <div class="property-location">${property.location}</div>
-                <p>${property.description}</p>
-                <div class="property-types"><strong>Available:</strong> ${[...new Set(options.map(option => option.propertyType).filter(Boolean))].join(" • ")}</div>
-                <div class="property-price">${options.length ? "From " + options[0].shortPlan : "Price on request"}</div>
-                <h4>Available Options</h4>
-
-                ${(options.filter(option => !type || option.propertyType === type)).map(option => `
-                    <div style="padding:10px 0;border-bottom:1px solid var(--border);">
-                        <strong>${option.propertyType}</strong><br>
-                        <span style="font-size:14px;color:var(--gray);">
-                            Short Plan: ${option.shortPlan}<br>
-                            Long Plan: ${option.longPlan}
-                        </span>
-                    </div>
-                `).join("")}
-
-                <br>
-                <a href="property.html?id=${property.id}" class="btn btn-outline-dark">View Property</a> <a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20am%20interested%20in%20${encodeURIComponent(property.name)}." class="btn btn-gold" target="_blank">Enquire on WhatsApp</a>
+                <p class="property-types"><strong>Property Type:</strong> ${option.propertyType || "Please confirm"}</p>
+                <p class="property-types"><strong>Bedrooms:</strong> ${option.bedrooms || "Please confirm"}</p>
+                <div class="property-price">${option.price || "Price on request"}</div>
+                <p class="property-types"><strong>Duration:</strong> ${duration}</p>
+                <a href="property.html?id=${property.id}" class="btn btn-outline-dark">View Property</a>
+                <a href="https://wa.me/2347060988611?text=Hello%20Solomon%2C%20I%20am%20interested%20in%20${encodeURIComponent(property.name)}." class="btn btn-gold" target="_blank">Enquire on WhatsApp</a>
             </div>
         </article>`;
     }).join("");
 }
 
+modeButtons.forEach(button => {
+    button.addEventListener("click", function() {
+        currentMode = this.dataset.mode;
+
+        modeButtons.forEach(btn => btn.classList.remove("active"));
+        this.classList.add("active");
+
+        locationFilter.value = "";
+        typeFilter.value = "";
+        categoryFilter.value = "";
+
+        setupFilters();
+        renderProperties();
+    });
+});
+
 locationFilter.addEventListener("change", renderProperties);
 typeFilter.addEventListener("change", renderProperties);
 categoryFilter.addEventListener("change", renderProperties);
 
+setupFilters();
 renderProperties();
 </script>
 

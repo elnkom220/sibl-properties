@@ -1,472 +1,98 @@
 const siteSettings = {
-    currentEdition: "September 2026",
-    nextUpdate: "October 1, 2026",
-
+    currentEdition: "October 2026",
+    nextUpdate: "To be confirmed",
     newsletters: {
-        siteServices: "newsletters/current-site-services.pdf",
-        ultra: "newsletters/current-ultra.pdf"
+        siteServices: "newsletters/october-site-services-2026.pdf",
+        ultra: "newsletters/october-ultra-2026.pdf"
     },
-
-    priceNotice:
-        "Prices, payment plans and availability are subject to change. Please confirm the current offer before making a purchase."
+    priceNotice: "Prices, payment plans and availability are subject to change. Please confirm the current offer before making a purchase.",
+    sourceNote: "Curated from the October 2026 MSHEL Homes Site & Services and Ultra newsletters. Third-party sales are excluded."
 };
 
-
 const properties = [
-
     {
-        id: "hutu-exclusive",
-        name: "Mshel Hutu Exclusive",
-        location: "Abuja",
-        category: "Site & Services",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "A residential property opportunity along Airport Road, before Centenary City, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦78,107,000",
-                longPlan: "₦93,728,400"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "2 Bedroom",
-                shortPlan: "₦119,591,901",
-                longPlan: "₦143,510,281"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦152,423,551",
-                longPlan: "₦182,908,262"
-            }
-        ],
-
-        newsletter: "siteServices",
-        images: []
+        id: "grand-reserve-land", product: "land", name: "Mshel Grand Reserve", location: "Airport Road, Abuja",
+        category: "LAND", plotSize: "400 sqm", prototype: "3 Bedroom Fully Detached",
+        description: "Nigeria's first integrated luxury lifestyle city on Airport Road, Abuja, according to the October Site & Services newsletter.",
+        images: ["images/properties/grand-reserve-400sqm.jpg"],
+        options: [{ propertyType: "Estate Land", plotSize: "400 sqm", price: 193000000, duration: "4 months / 8 months", shortPlan: "₦193,000,000", longPlan: "₦216,160,000" }]
+    },
+    {
+        id: "elite-villas-land", product: "land", name: "Mshel Elite Villas", location: "Asokoro, Abuja",
+        category: "LAND", plotSize: "250 sqm", prototype: "4 Bedroom Semi-Detached Duplex",
+        description: "A modern residential community in Asokoro Main spanning 18 hectares, with FCDA C of O approval and extensive amenities.",
+        images: ["images/properties/elite-villas-250sqm.jpg"],
+        options: [{ propertyType: "Estate Land", plotSize: "250 sqm", price: 218625000, duration: "4 months / 8 months", shortPlan: "₦218,625,000", longPlan: "₦244,860,000" }]
+    },
+    {
+        id: "groove-estate-land", product: "land", name: "Mshel Groove Estate", location: "Wuye, Abuja",
+        category: "LAND", plotSize: "350 sqm", prototype: "5 Bedroom Semi-Detached Duplex",
+        description: "A premium estate in Wuye with recreation areas, swimming pool, tennis court and lush green areas.",
+        images: ["images/properties/groove-estate-350sqm.jpg"],
+        options: [{ propertyType: "Estate Land", plotSize: "350 sqm", price: 276699086, duration: "2 months / 6 months", shortPlan: "₦276,699,086", longPlan: "₦309,902,976" }]
+    },
+    {
+        id: "hutu-exclusive-land", product: "land", name: "Mshel Hutu Exclusive Phase 1 & 2", location: "Airport Road / Centenary City, Abuja",
+        category: "LAND", plotSize: "150 sqm", prototype: "3 Bedroom Terrace Duplex",
+        description: "An estate-land opportunity within Mshel Hutu Exclusive, a large lifestyle development along Airport Road, Abuja.",
+        images: ["images/properties/hutu-exclusive-150sqm.jpg"],
+        options: [{ propertyType: "Estate Land", plotSize: "150 sqm", price: 24698520, duration: "4 months / 8 months", shortPlan: "₦24,698,520", longPlan: "₦27,662,342" }]
+    },
+    {
+        id: "horizon-estate-land", product: "land", name: "Mshel Horizon Estate", location: "Kukwaba, Abuja",
+        category: "LAND", plotSize: "250 sqm", prototype: "5 Bedroom Semi-Detached Duplex + BQ",
+        description: "An FCDA-approved estate land development in Kukwaba near City Gate and House on the Rock Church.",
+        images: ["images/properties/horizon-estate-250sqm.jpg"],
+        options: [{ propertyType: "Estate Land", plotSize: "250 sqm", price: 142230000, duration: "2 months / 6 months", shortPlan: "₦142,230,000", longPlan: "₦159,297,600" }]
+    },
+    {
+        id: "oasis-court-land", product: "land", name: "Mshel Oasis Court", location: "Apo-Wasa, Abuja",
+        category: "LAND", plotSize: "250 sqm", prototype: "4 Bedroom Semi-Detached Duplex",
+        description: "An FCDA-approved estate land development in Apo-Wasa with planned infrastructure including perimeter fencing, gatehouse, internal roads, drainage and streetlights.",
+        images: ["images/properties/oasis-court-250sqm.jpg"],
+        options: [{ propertyType: "Estate Land", plotSize: "250 sqm", price: 9897845.76, duration: "2 months / 6 months", shortPlan: "₦9,897,845.76", longPlan: "₦11,085,587.30" }]
     },
 
-
     {
-        id: "groove-estate",
-        name: "Groove Estate",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartments and duplex options in Wuye, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦130,625,000",
-                longPlan: "₦156,750,000"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "2 Bedroom",
-                shortPlan: "₦224,687,500",
-                longPlan: "₦269,625,000"
-            },
-            {
-                optionName: "",
-                propertyType: "Semi-Detached Duplex",
-                bedrooms: "5 Bedroom + BQ",
-                shortPlan: "₦850,859,375",
-                longPlan: "₦1,021,031,250"
-            },
-            {
-                optionName: "",
-                propertyType: "Fully Detached Duplex",
-                bedrooms: "6 Bedroom + BQ",
-                shortPlan: "₦932,500,000",
-                longPlan: "₦1,119,000,000"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
+        id: "carlton-residences", product: "home", name: "Mshel Carlton Residences", location: "Maitama, Abuja",
+        category: "APARTMENTS & HOMES", propertyType: "Apartment", bedrooms: "3 Bedroom",
+        description: "A Maitama residence featuring a pool, gym, badminton court, children's park and clubhouse.",
+        images: ["images/properties/carlton-3br.jpg"],
+        options: [{ propertyType: "Apartment", bedrooms: "3 Bedroom", price: 348000000, duration: "6 months / 12 months", shortPlan: "₦348,000,000", longPlan: "₦417,600,000" }]
     },
-
-
     {
-        id: "signature-residence",
-        name: "Signature Residence",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Premium residential options in Wuye, Abuja.",
-
-        options: [
-            {
-                optionName: "Nobel",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦191,412,064",
-                longPlan: "₦229,705,276.80"
-            },
-            {
-                optionName: "Lumora",
-                propertyType: "Terrace Duplex",
-                bedrooms: "4 Bedroom",
-                shortPlan: "₦309,698,240",
-                longPlan: "₦389,531,788.10"
-            },
-            {
-                optionName: "Solara",
-                propertyType: "Semi-Detached Duplex",
-                bedrooms: "5 Bedroom + 1 BQ",
-                shortPlan: "₦475,259,506.76",
-                longPlan: "₦570,311,408.11"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
+        id: "elite-villas-home", product: "home", name: "Mshel Elite Villas", location: "Asokoro, Abuja",
+        category: "APARTMENTS & HOMES", propertyType: "Apartment", bedrooms: "2 Bedroom",
+        description: "Residential apartments within the 18-hectare Mshel Elite Villas community in Asokoro Main.",
+        images: ["images/properties/elite-villas-2br.jpg"],
+        options: [{ propertyType: "Apartment", bedrooms: "2 Bedroom", price: 226875000, duration: "6 months / 12 months", shortPlan: "₦226,875,000", longPlan: "₦272,250,000" }]
     },
-
-
     {
-        id: "palm-residence",
-        name: "MSHEL Palm Residence",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartments in Kuje, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦15,900,000",
-                longPlan: "₦19,080,000"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦38,800,000",
-                longPlan: "₦46,560,000"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
+        id: "groove-estate-home", product: "home", name: "Mshel Groove Estate", location: "Wuye, Abuja",
+        category: "APARTMENTS & HOMES", propertyType: "Apartment", bedrooms: "1 Bedroom",
+        description: "A Wuye residential development offering apartment living within a premium estate setting.",
+        images: ["images/properties/groove-estate-1br.jpg"],
+        options: [{ propertyType: "Apartment", bedrooms: "1 Bedroom", price: 143687500, duration: "6 months / 12 months", shortPlan: "₦143,687,500", longPlan: "₦172,425,000" }]
     },
-
-
     {
-        id: "prime-residence",
-        name: "MSHEL Prime Residence",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartments in Idu, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦16,490,880",
-                longPlan: "₦20,052,910"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
+        id: "signature-residence", product: "home", name: "Mshel Signature Residence", location: "Wuye, Abuja",
+        category: "APARTMENTS & HOMES", propertyType: "Apartment", bedrooms: "3 Bedroom",
+        description: "A private luxury enclave in Wuye with smart-home features, clubhouse, gym, swimming pool and other amenities.",
+        images: ["images/properties/signature-residence-3br.jpg"],
+        options: [{ propertyType: "Apartment", bedrooms: "3 Bedroom", name: "Nobel", price: 210553270, duration: "6 months / 12 months", shortPlan: "₦210,553,270", longPlan: "₦252,663,924" }]
     },
-
-
     {
-        id: "elaris-residence",
-        name: "MSHEL Elaris Residence",
-        location: "Lagos",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartments and terrace duplex options in Ajah, Lagos.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦58,300,000",
-                longPlan: "₦69,960,000"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "2 Bedroom",
-                shortPlan: "₦66,000,000",
-                longPlan: "₦79,200,000"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦99,000,000",
-                longPlan: "₦118,800,000"
-            },
-            {
-                optionName: "",
-                propertyType: "Terrace Duplex",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦99,000,000",
-                longPlan: "₦118,800,000"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
+        id: "hutu-exclusive-home", product: "home", name: "Mshel Hutu Exclusive", location: "Airport Road, Before Centenary City, Abuja",
+        category: "APARTMENTS & HOMES", propertyType: "Apartment", bedrooms: "1 Bedroom",
+        description: "A 1-bedroom apartment option within Mshel Hutu Exclusive, the Airport Road lifestyle development.",
+        images: ["images/properties/hutu-exclusive-1br.jpg"],
+        options: [{ propertyType: "Apartment", bedrooms: "1 Bedroom", price: 85971700, duration: "12 months / 18 months", shortPlan: "₦85,971,700", longPlan: "₦103,166,040" }]
     },
-
-
     {
-        id: "belle-vista",
-        name: "MSHEL Belle Vista",
-        location: "Abuja",
-        category: "Third Party",
-        developer: "Third Party",
-
-        description:
-            "Third-party residential property opportunities in Kyami, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦19,508,377",
-                longPlan: ""
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "2 Bedroom",
-                shortPlan: "₦31,250,000",
-                longPlan: ""
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "vine-city",
-        name: "MSHEL Vine City",
-        location: "Abuja",
-        category: "Third Party",
-        developer: "Third Party",
-
-        description:
-            "Residential apartment opportunity in Apo-Wasa, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦32,303,926",
-                longPlan: ""
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "pine-court",
-        name: "MSHEL Pine Court",
-        location: "Abuja",
-        category: "Third Party",
-        developer: "Third Party",
-
-        description:
-            "Residential apartment opportunity in Apo-Wasa, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦13,703,982",
-                longPlan: ""
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "horizon",
-        name: "MSHEL Horizon",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartments and duplex opportunities in Kukwaba, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦117,787,500",
-                longPlan: "₦158,580,250"
-            },
-            {
-                optionName: "",
-                propertyType: "Semi-Detached Duplex",
-                bedrooms: "5 Bedroom + BQ",
-                shortPlan: "₦263,800,313",
-                longPlan: "₦419,000,000"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "harmony-hills",
-        name: "MSHEL Harmony Hills",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartment opportunity in Katampe Extension, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦102,200,000",
-                longPlan: "₦119,000,000"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "beacon-ville",
-        name: "MSHEL Beacon Ville",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential apartment options in Gaduwa, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "1 Bedroom",
-                shortPlan: "₦64,413,500",
-                longPlan: "₦77,296,200"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "2 Bedroom",
-                shortPlan: "₦96,520,250",
-                longPlan: "₦115,824,300"
-            },
-            {
-                optionName: "",
-                propertyType: "Apartment",
-                bedrooms: "3 Bedroom",
-                shortPlan: "₦160,533,750",
-                longPlan: "₦192,640,500"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "forte-residence",
-        name: "MSHEL Forte Residence",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential terrace duplex opportunity in Apo-Wasa, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Terrace Duplex",
-                bedrooms: "4 Bedroom",
-                shortPlan: "₦103,285,000",
-                longPlan: "₦115,535,760"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
-    },
-
-
-    {
-        id: "royal-estate",
-        name: "MSHEL Royal Estate",
-        location: "Abuja",
-        category: "Ultra",
-        developer: "Mshel Homes Limited",
-
-        description:
-            "Residential fully detached duplex opportunity in Sabon Lugbe, Abuja.",
-
-        options: [
-            {
-                optionName: "",
-                propertyType: "Fully Detached Duplex",
-                bedrooms: "5 Bedroom",
-                shortPlan: "₦64,646,500",
-                longPlan: "₦72,256,240"
-            }
-        ],
-
-        newsletter: "ultra",
-        images: []
+        id: "horizon-home", product: "home", name: "Mshel Horizon", location: "Kukwaba, Abuja",
+        category: "APARTMENTS & HOMES", propertyType: "Apartment", bedrooms: "3 Bedroom",
+        description: "A 3-bedroom apartment option in the FCDA-approved Mshel Horizon development in Kukwaba.",
+        images: ["images/properties/horizon-3br.jpg"],
+        options: [{ propertyType: "Apartment", bedrooms: "3 Bedroom", price: 136104500, duration: "6 months / 12 months", shortPlan: "₦136,104,500", longPlan: "₦158,580,250" }]
     }
-
 ];
-
